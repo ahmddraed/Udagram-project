@@ -1,0 +1,62 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 12.22.10
+
+      - name: Install dependencies
+        run: |
+          npm run frontend:install
+          npm run backend:install
+
+      - name: Build Frontend
+        run: npm run frontend:build
+
+      - name: Build Backend
+        run: npm run backend:build
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Install Elastic Beanstalk CLI
+        run: |
+          pip install awsebcli
+
+      - name: Set Elastic Beanstalk Environment Variables
+        run: |
+          cd udagram-api
+          eb init udagram-api --platform node.js --region us-east-1
+          eb use udagram-api-dev
+          eb setenv \
+          POSTGRES_HOST=${{ secrets.POSTGRES_HOST }} \
+          POSTGRES_USERNAME=${{ secrets.POSTGRES_USERNAME }} \
+          POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
+          POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+          PORT=${{ secrets.PORT }} \
+          DB_PORT=${{ secrets.DB_PORT }} \
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
+
+      - name: Deploy Frontend
+        run: npm run frontend:deploy
+
+      - name: Deploy Backend
+        run: npm run backend:deploy
