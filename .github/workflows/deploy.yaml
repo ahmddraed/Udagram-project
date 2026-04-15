@@ -83,4 +83,4 @@ jobs:
         
       - name: Deploy to S3
         run: |
-          aws s3 sync udagram-frontend/dist/* s3://${{ vars.FRONTEND_BUCKET }} --delete
+          aws s3 sync udagram-frontend/dist/udagram-frontend/ s3://${{ vars.FRONTEND_BUCKET }} --delete
