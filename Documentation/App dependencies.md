@@ -12,6 +12,6 @@
 - rxjs
 - zone.js
 ## DevOps :
-AWS CLI v2
-docker 
-terraform
+- AWS CLI v2
+- docker 
+- terraform

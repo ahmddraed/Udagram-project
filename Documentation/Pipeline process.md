@@ -1,11 +1,11 @@
 ## The pipline  process steps are :
-## FRONT-END:
+## FRONTEND:
 - install dependencies
 - build angular
 - configure aws credentials 
 - deploy to s3
 
-## BACK-END:
+## BACKEND:
 - configure AWS credentials
 - login to dockerhub
 - build the image
