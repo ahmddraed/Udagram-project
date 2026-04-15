@@ -74,6 +74,9 @@ jobs:
           cd udagram-frontend
           npm run build -- --configuration production 
 
+      - name: Debug dist folder
+        run: ls udagram-frontend/dist/
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
