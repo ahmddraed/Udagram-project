@@ -11,3 +11,7 @@
 - ionic
 - rxjs
 - zone.js
+## DevOps :
+AWS CLI v2
+docker 
+terraform

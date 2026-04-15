@@ -1,11 +1,13 @@
 ## The pipline  process steps are :
-- Install node.js
-- Install AWS-Cli
-- Setting up Elastic beanstalk Cli
-- Install frontEnd dependencies
-- Install backEnd dependencies
-- FrontEnd building
-- BackEnd building
-- Set env variables
-- FrontEnd deploy
-- BackEnd deploy
+## FRONT-END:
+- install dependencies
+- build angular
+- configure aws credentials 
+- deploy to s3
+
+## BACK-END:
+- configure AWS credentials
+- login to dockerhub
+- build the image
+- push image
+- deploy to fargate
