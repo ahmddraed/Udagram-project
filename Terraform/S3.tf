@@ -44,6 +44,7 @@ EOF
 
 resource "aws_s3_bucket" "frontend" {
   bucket = "udagram-frontend-s3"
+  force_destroy = true
 }
 
 # disable block public access
