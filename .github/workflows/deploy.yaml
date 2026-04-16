@@ -46,7 +46,7 @@ jobs:
   frontend:
     name: Frontend Deploy (S3)
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v3
