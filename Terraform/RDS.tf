@@ -48,9 +48,9 @@ resource "aws_db_instance" "postgres" {
 
   allocated_storage = 20
 
-  db_name  = "postgres"
-  username = "udagram_user"
-  password = "password"
+  db_name  = var.POSTGRES_DB
+  username = var.POSTGRES_USER
+  password = var.POSTGRES_PASSWORD
 
   db_subnet_group_name   = aws_db_subnet_group.default.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
