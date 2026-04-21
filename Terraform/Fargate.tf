@@ -66,11 +66,19 @@ resource "aws_ecs_task_definition" "app" {
           hostPort      = 8080
         }
       ]
+         logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = "/ecs/udagram"
+          awslogs-region        = var.region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
 
       environment = [
         {
           name  = "POSTGRES_HOST"
-          value = aws_db_instance.postgres.endpoint
+          value = aws_db_instance.postgres.address
         },
         {
           name  = "POSTGRES_USER"
@@ -121,4 +129,8 @@ resource "aws_ecs_service" "app" {
     security_groups  = [aws_security_group.fargate_sg.id]
     assign_public_ip = true
   }
+}
+resource "aws_cloudwatch_log_group" "ecs_logs" {
+  name              = "/ecs/udagram"
+  retention_in_days = 7
 }
