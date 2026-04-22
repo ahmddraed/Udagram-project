@@ -17,24 +17,24 @@ resource "aws_iam_role" "fargate_role" { # el role bta3t el api (fargate)
   })
 }
 
-resource "aws_s3_bucket_policy" "s3_policy" {
-  bucket = aws_s3_bucket.app_bucket.id
-  policy = <<EOF
-        {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-            "Sid": "Statement1",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "${aws_iam_role.fargate_role.arn}"
-            },
-            "Action": "s3:*",
-            "Resource": "arn:aws:s3:::${aws_s3_bucket.app_bucket.id}/*"
-            }
-        ]
-        }
-EOF
+resource "aws_iam_role_policy" "fargate_s3_policy" {        # el role ma3molha attach fel policy bdl ma a3mel attach policy (inline)
+  name = "fargate-s3-access"                                
+  role = aws_iam_role.fargate_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject"
+        ],
+        Resource = "${aws_s3_bucket.app_bucket.arn}/*"
+      }
+    ]
+  })
 }
 
 
@@ -91,7 +91,7 @@ resource "aws_s3_bucket_policy" "public_policy" {
 }
 
 
-# optional: output website URL
+# output website URL
 output "website_url" {
   value = aws_s3_bucket_website_configuration.website.website_endpoint
 }

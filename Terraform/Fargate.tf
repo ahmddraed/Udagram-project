@@ -17,12 +17,12 @@ resource "aws_security_group" "fargate_sg" {
   }
 }
 
-resource "aws_ecs_cluster" "main" {
+resource "aws_ecs_cluster" "main" {      # logical group for all the sevices and tasks
   name = "udagram-cluster"
 }
 
 
-resource "aws_iam_role" "ecs_execution_role" {
+resource "aws_iam_role" "ecs_execution_role" {    # da role 3shan ecs y3ml pull lel images aw msln yb3t logs le cloudwatch (role le AWS nfso)
   name = "ecsTaskExecutionRole"
 
   assume_role_policy = jsonencode({
@@ -44,7 +44,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_attach" {
 }
 
 
-resource "aws_ecs_task_definition" "app" {
+resource "aws_ecs_task_definition" "app" {     #da zy el reciept kda feh kol el specs bta3t el container 
   family                   = "my-api"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -117,7 +117,7 @@ resource "aws_ecs_task_definition" "app" {
   ])
 }
 
-resource "aws_ecs_service" "app" {
+resource "aws_ecs_service" "app" {         #zy docker swarm kda 
   name            = "my-api-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
