@@ -17,8 +17,8 @@ resource "aws_iam_role" "fargate_role" { # el role bta3t el api (fargate)
   })
 }
 
-resource "aws_iam_role_policy" "fargate_s3_policy" {        # el role ma3molha attach fel policy bdl ma a3mel attach policy (inline)
-  name = "fargate-s3-access"                                
+resource "aws_iam_role_policy" "fargate_s3_policy" { # el role ma3molha attach fel policy bdl ma a3mel attach policy (inline)
+  name = "fargate-s3-access"
   role = aws_iam_role.fargate_role.id
 
   policy = jsonencode({
@@ -43,7 +43,7 @@ resource "aws_iam_role_policy" "fargate_s3_policy" {        # el role ma3molha a
 #__________________________________________________________________________________________________
 
 resource "aws_s3_bucket" "frontend" {
-  bucket = "udagram-frontend-s3"
+  bucket        = "udagram-frontend-s3"
   force_destroy = true
 }
 
