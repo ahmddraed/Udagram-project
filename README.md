@@ -38,7 +38,7 @@ all the project dependencies will be built and installed during the pipeline and
 
 ## OutPuts 
 
-After provisioning the infrastucture, Terraform will display these outputs:
+After provisioning the infrastucture, Terraform will display these OutPuts:
 
 1. database Endpoint 
 1. Frontend URL
