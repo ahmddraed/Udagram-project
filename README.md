@@ -7,14 +7,15 @@ the deployed website can be found from [Press_here](udagram-frontend-s3.s3-websi
 
 
 ### Archeticture
-1. Amazon ECS (Fargate): Run containers without managing servers
+1. Amazon ECS (Fargate): Run containers (2 replicas) without managing servers
+1. Application Load Balancer (ALB): To route the traffic to Fargate
 1. Amazon RDS (PostgreSQL): Managed relational database
 1. Amazon S3: Store application assets
-1. S3 Static Website Hosting → Serve frontend
+1. S3 Static Website Hosting : Serve frontend
 1. IAM Roles: Manage permissions
 1. Security Groups: Control network traffic
 
-![Screenshot](./Screens/Udagram-Archeticture.drawio.png)
+![Screenshot](./Screens/Project-Archeticture.drawio.png)
 
 ## Getting Started
 
@@ -42,6 +43,7 @@ After provisioning the infrastucture, Terraform will display these OutPuts:
 
 1. database Endpoint 
 1. Frontend URL
+1. ALB DNS
 
 
 
