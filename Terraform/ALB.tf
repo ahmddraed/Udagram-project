@@ -33,7 +33,7 @@ resource "aws_lb_target_group" "targetGroup" {
   vpc_id      = data.aws_vpc.default.id
 }
 
-resource "aws_lb_listener" "listening" {
+resource "aws_lb_listener" "listening" {      # byrbot mben el target group w el alb nfso (forward the trafic to tg)
   load_balancer_arn = aws_lb.load_balancer.arn
   port              = "80"
   protocol          = "HTTP"
