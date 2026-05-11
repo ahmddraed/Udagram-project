@@ -24,6 +24,7 @@ the deployed website can be found from [Press_here](udagram-frontend-s3.s3-websi
 1. go to Terrafom Folder 
 1. initialize terraform by $ terraform init
 1. Preview the infrastructure by $ terraform plan & apply with $ terraform apply  
+![Screenshot](./Screens/glimpse-of-terraform-state.png)
 
 
 ### Dependencies
@@ -44,6 +45,22 @@ After provisioning the infrastucture, Terraform will display these OutPuts:
 1. database Endpoint 
 1. Frontend URL
 1. ALB DNS
+
+## Application Screenshot
+
+![Application](./Screens/UDAGRAM.png)
+
+# jump into database
+
+![DataBase](./Screens/jump-into-database.png)
+
+# Fargate
+
+![Farget](./Screens/fatgate-tasks.png)
+
+# s3 hosting frontend 
+
+![Screenshot](./Screens/s3-bucket-webhosting.png)
 
 
 
