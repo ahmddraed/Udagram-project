@@ -15,7 +15,7 @@ the deployed website can be found from [Press_here](udagram-frontend-s3.s3-websi
 1. IAM Roles: Manage permissions
 1. Security Groups: Control network traffic
 
-![Screenshot](./Screens/Project-Archeticture.drawio.png)
+![Screenshot](./Screens/the-arch.drawio.png)
 
 ## Getting Started
 
