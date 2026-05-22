@@ -94,8 +94,13 @@ resource "aws_route_table" "public-RT" {
   }
 }
 
-resource "aws_route_table_association" "public-rt-assoc" {
+resource "aws_route_table_association" "public-rt-assoc-01" {
   subnet_id      = aws_subnet.public-subnet-01.id
+  route_table_id = aws_route_table.public-RT.id
+}
+
+resource "aws_route_table_association" "public-rt-assoc-02" {
+  subnet_id      = aws_subnet.public-subnet-02.id
   route_table_id = aws_route_table.public-RT.id
 }
 
