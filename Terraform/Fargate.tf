@@ -1,12 +1,12 @@
 resource "aws_security_group" "fargate_sg" {
   name   = "fargate-sg"
-  vpc_id = data.aws_vpc.default.id
+  vpc_id = aws_vpc.main-vpc.id
 
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # 3shan agrb mn el browser
+    security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
@@ -17,12 +17,12 @@ resource "aws_security_group" "fargate_sg" {
   }
 }
 
-resource "aws_ecs_cluster" "main" { # logical group for all the sevices and tasks
+resource "aws_ecs_cluster" "main" {          # logical group for all the sevices and tasks
   name = "udagram-cluster"
 }
 
 
-resource "aws_iam_role" "ecs_execution_role" { # da role 3shan ecs y3ml pull lel images aw msln yb3t logs le cloudwatch (role le AWS nfso)
+resource "aws_iam_role" "ecs_execution_role" {      # da role 3shan ecs y3ml pull lel images aw msln yb3t logs le cloudwatch (role le AWS nfso)
   name = "ecsTaskExecutionRole"
 
   assume_role_policy = jsonencode({
@@ -44,7 +44,7 @@ resource "aws_iam_role_policy_attachment" "ecs_execution_attach" {
 }
 
 
-resource "aws_ecs_task_definition" "app" { #da zy el reciept kda feh kol el specs bta3t el container 
+resource "aws_ecs_task_definition" "app" {               # da zy el reciept kda feh kol el specs bta3t el container 
   family                   = "my-api"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -117,7 +117,7 @@ resource "aws_ecs_task_definition" "app" { #da zy el reciept kda feh kol el spec
   ])
 }
 
-resource "aws_ecs_service" "app" { #zy docker swarm kda 
+resource "aws_ecs_service" "app" {                       # zy docker swarm kda 
   name            = "my-api-service"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.app.arn
@@ -125,9 +125,12 @@ resource "aws_ecs_service" "app" { #zy docker swarm kda
   desired_count   = 2
 
   network_configuration {
-    subnets          = data.aws_subnets.default.ids
+    subnets          = [
+      aws_subnet.private-subnet-01.id,
+      aws_subnet.private-subnet-02.id
+    ]
     security_groups  = [aws_security_group.fargate_sg.id]
-    assign_public_ip = true
+    assign_public_ip = false
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.targetGroup.arn

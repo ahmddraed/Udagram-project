@@ -1,22 +1,9 @@
-data "aws_vpc" "default" {
-  default = true
-}
-
-data "aws_subnets" "default" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-}
-
-
-
 resource "aws_security_group" "rds_sg" {
   name        = "rds-postgres-sg"
   description = "Allow PostgreSQL access"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = aws_vpc.main-vpc.id
 
-  ingress { #inside
+  ingress {                              #inside
     description     = "Postgres access from Fargate"
     from_port       = 5432
     to_port         = 5432
@@ -24,19 +11,22 @@ resource "aws_security_group" "rds_sg" {
     security_groups = [aws_security_group.fargate_sg.id]
   }
 
-  egress { #outside
+  egress {                               #outside
     from_port   = 0
     to_port     = 0
-    protocol    = "-1" #any protocol
+    protocol    = "-1"                   #any protocol
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
 
 
-resource "aws_db_subnet_group" "default" {
-  name       = "default-subnet-group"
-  subnet_ids = data.aws_subnets.default.ids
+resource "aws_db_subnet_group" "rds-subnet" {      
+  name       = "rds-subnet-group"
+  subnet_ids = [
+      aws_subnet.private-subnet-01.id,
+      aws_subnet.private-subnet-02.id
+  ]
 }
 
 
@@ -52,7 +42,7 @@ resource "aws_db_instance" "postgres" {
   username = var.POSTGRES_USER
   password = var.POSTGRES_PASSWORD
 
-  db_subnet_group_name   = aws_db_subnet_group.default.name
+  db_subnet_group_name   = aws_db_subnet_group.rds-subnet.name
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   publicly_accessible = false
