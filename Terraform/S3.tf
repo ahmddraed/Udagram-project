@@ -36,29 +36,6 @@ resource "aws_iam_role_policy" "fargate_s3_policy" { # el role ma3molha attach f
     ]
   })
 }
-#####cors-----------
-resource "aws_s3_bucket_cors_configuration" "app_bucket_cors" {
-  bucket = aws_s3_bucket.app_bucket.id
-
-  cors_rule {
-    allowed_headers = ["*"]
-
-    allowed_methods = [
-      "GET",
-      "PUT",
-      "POST",
-      "DELETE"
-    ]
-
-    allowed_origins = ["*"]
-
-    expose_headers = ["ETag"]
-
-    max_age_seconds = 3000
-  }
-}
-
-
 
 #__________________________________________________________________________________________________
 # FRONT-END

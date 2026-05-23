@@ -8,6 +8,7 @@ the deployed website can be found from [Press_here](udagram-frontend-s3.s3-websi
 
 ### Archeticture
 1. Amazon ECS (Fargate): Run containers (2 replicas) without managing servers
+1. Amazon VPC : For private network in the clound 
 1. Application Load Balancer (ALB): To route the traffic to Fargate
 1. Amazon RDS (PostgreSQL): Managed relational database
 1. Amazon S3: Store application assets
