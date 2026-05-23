@@ -5,7 +5,7 @@
 export const environment = {
   production: true,
   appName: "Udagram",
-  apiHost: "http://fargate-loadBalancer-399663130.eu-north-1.elb.amazonaws.com/api/v0",
+  apiHost: "http://fargate-loadBalancer-1814220389.eu-north-1.elb.amazonaws.com/api/v0",
 };
 
 /*
